@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using StackUnderflow.Models;
 
@@ -10,6 +11,10 @@ namespace StackUnderflow.Interfaces
     string Body { get; set; }
     string AuthorId { get; set; }
     string AnswerId { get; set; }
+    bool QuestionAnswered { get; set; }
+    DateTime QuestionCreated { get; set; }
+    DateTime LastModified { get; set; }
+
     List<Category> Tags { get; set; }
   }
 }
