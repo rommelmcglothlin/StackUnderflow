@@ -84,6 +84,11 @@ namespace StackUnderflow.Services
       return _rr.GetResponsesForQuestion(question.Id).ToList();
     }
 
+    public bool AddCategoryToQuestion(Category categoryData) //NOTE not sure how to write this logic yet
+    {
+      return true;
+    }
+
     public QuestionsService(QuestionsRepository repo, ResponsesRepository rr)
     {
       _repo = repo;

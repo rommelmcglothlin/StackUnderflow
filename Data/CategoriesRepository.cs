@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Data;
 using Dapper;
@@ -42,8 +43,19 @@ namespace StackUnderflow.Data
                 SELECT * FROM categories
                 WHERE questionid = @id;",
                 new { id });
-
     }
+
+    internal bool AddCategory(string categoryId, string questionId)
+    {
+      var id = Guid.NewGuid().ToString();
+      var sql = @"INSERT INTO categoryquestions
+                (id, categoryid, questionid)
+                VALUES
+                (@id, @categoryId, @questionId);";
+      var success = _db.Execute(sql, new { id, categoryId, questionId });
+      return success == 1;
+    }
+
 
     public CategoriesRepository(IDbConnection db)
     {
@@ -51,4 +63,13 @@ namespace StackUnderflow.Data
     }
 
   }
+
+  //REVIEW  this logic may be used later
+  //   var sql = @"
+  //         SELECT 
+  //         q.*  
+  //         FROM questions q
+  //         JOIN questionscategory qc ON q.id = qc.questionid
+  //         JOIN categories c ON qc.categoryid = c.id
+  //         WHERE q.id = @id";
 }

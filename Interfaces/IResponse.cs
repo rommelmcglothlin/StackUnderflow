@@ -8,7 +8,7 @@ namespace StackUnderflow.Interfaces
     string Body { get; set; }
     string QuestionId { get; set; }
     string AuthorId { get; set; }
-    bool Answered { get; set; }
+    bool QuestionAnswered { get; set; }
     DateTime Responded { get; set; }
     DateTime Updated { get; set; }
   }

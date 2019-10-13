@@ -42,7 +42,6 @@ namespace StackUnderflow.Services
     }
 
 
-
     public CategoriesService(CategoriesRepository repo)
     {
       _repo = repo;

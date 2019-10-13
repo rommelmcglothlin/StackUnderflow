@@ -45,23 +45,21 @@ CRATE TABLE IF NOT EXISTS responses
 CREATE TABLE IF NOT EXISTS categories
 (
   id VARCHAR(255) NOT NULL,
-  name VARCHAR(255) NOT NULL,
+  name VARCHAR(255) NOT NULL UNIQUE,
   
   PRIMARY KEY(id)
 );
 
--- CREATE TABLE IF NOT EXISTS 
--- (
---   authorid VARCHAR(255) NOT NULL,
---   categoryid VARCHAR(255) NOT NULL,
---   questionid VARCHAR(255) NOT NULL,
---   answerid VARCHAR(255) NOT NULL,
+CREATE TABLE IF NOT EXISTS categoryquestions
+(
+  id VARCHAR(255) NOT NULL,
+  categoryid VARCHAR(255) NOT NULL,
+  questionid VARCHAR(255) NOT NULL,
 
---   FOREIGN KEY (questionid)
---   REFERENCES questions(id),
---   FOREIGN KEY (answerid)
---   REFERENCES responses(id),
---   FOREIGN KEY (authorid)
---   REFERENCES users(id),
+  FOREIGN KEY (questionsid)
+  REFERENCES questions(id),
+  FOREIGN KEY (categoryid)
+  REFERENCES categories(id),
+  PRIMARY KEY (id)
 
--- )
+);

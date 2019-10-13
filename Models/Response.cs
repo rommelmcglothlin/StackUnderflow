@@ -9,7 +9,7 @@ namespace StackUnderflow.Models
     public string Body { get; set; }
     public string QuestionId { get; set; }
     public string AuthorId { get; set; }
-    public bool Answered { get; set; }
+    public bool QuestionAnswered { get; set; }
     public DateTime Responded { get; set; }
     public DateTime Updated { get; set; }
   }
