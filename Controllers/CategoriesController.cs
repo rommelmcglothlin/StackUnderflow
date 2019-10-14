@@ -43,8 +43,19 @@ namespace StackUnderflow.Controllers
       }
     }
 
-    [HttpDelete("{id}")] //NOTE may need a delete?
-    public void Delete(int id) { }
+    [HttpDelete("{id}")]
+    public ActionResult<Category> Delete(string id)
+    {
+      try
+      {
+        var category = _cs.DeleteCategory(id);
+        return Ok(category);
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
 
     public CategoriesController(CategoriesService cs)
     {

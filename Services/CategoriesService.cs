@@ -41,6 +41,18 @@ namespace StackUnderflow.Services
       return category;
     }
 
+    public Category DeleteCategory(string id)
+    {
+      var category = GetCategoryById(id);
+      var deleted = _repo.DeleteCategory(id);
+      if (!deleted)
+      {
+        throw new Exception($"Unable to delete category ID: {id}");
+      }
+      return category;
+      //TODO add logic to be unable to delete once added to a question
+    }
+
 
     public CategoriesService(CategoriesRepository repo)
     {

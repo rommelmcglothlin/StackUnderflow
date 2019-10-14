@@ -56,6 +56,14 @@ namespace StackUnderflow.Data
       return success == 1;
     }
 
+    internal bool DeleteCategory(string id)
+    {
+      var success = _db.Execute(@"
+      DELETE FROM categories WHERE id = @id",
+      new { id });
+      return success == 1;
+    }
+
 
     public CategoriesRepository(IDbConnection db)
     {
