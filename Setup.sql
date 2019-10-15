@@ -60,3 +60,7 @@ CREATE TABLE IF NOT EXISTS categoryquestions
   PRIMARY KEY (id)
 
 );
+
+-- DROP TABLE categoryquestions; 
+
+-- DROP TABLE categories;

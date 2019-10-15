@@ -20,6 +20,13 @@ namespace StackUnderflow.Data
       return categoryData;
     }
 
+    public Category GetCategoryByName(string name)
+    {
+      return _db.QueryFirstOrDefault<Category>(
+        "SELECT * FROM categories WHERE name = @name",
+        new { name });
+    }
+
     public Category GetCategoryById(string id)
     {
       return _db.QueryFirstOrDefault<Category>(
@@ -84,7 +91,6 @@ namespace StackUnderflow.Data
           WHERE c.id = @id";
       var success = _db.Execute(sql, new { id });
       return success == 1;
-
     }
 
 

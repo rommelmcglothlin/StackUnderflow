@@ -10,6 +10,11 @@ namespace StackUnderflow.Services
 
     public Category AddCategory(Category categoryData)
     {
+      var exists = _repo.GetCategoryByName(categoryData.Name);
+      if (exists != null)
+      {
+        throw new Exception("This category alredy exists.");
+      }
       categoryData.Id = Guid.NewGuid().ToString();
       _repo.Create(categoryData);
       return categoryData;
