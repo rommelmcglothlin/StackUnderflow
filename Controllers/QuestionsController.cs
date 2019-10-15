@@ -87,6 +87,21 @@ namespace StackUnderflow.Controllers
 
     }
 
+    [HttpPut("{id}/categories")]
+    public ActionResult<LinkorUnlinkCategory> AddCategoryToQuestion(string id, [FromBody]  LinkorUnlinkCategory linkOrUnlink)
+    {
+      try
+      {
+        linkOrUnlink.QuestionId = id;
+        _qs.AddCategoryToQuestion(linkOrUnlink);
+        return Ok(linkOrUnlink);
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+
 
     [HttpDelete("{id}")]
     public ActionResult<Question> Delete(string id)

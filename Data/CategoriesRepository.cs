@@ -45,7 +45,7 @@ namespace StackUnderflow.Data
                 new { id });
     }
 
-    internal bool AddCategory(string categoryId, string questionId)
+    internal bool LinkCategory(string categoryId, string questionId)
     {
       var id = Guid.NewGuid().ToString();
       var sql = @"INSERT INTO categoryquestions
@@ -53,6 +53,14 @@ namespace StackUnderflow.Data
                 VALUES
                 (@id, @categoryId, @questionId);";
       var success = _db.Execute(sql, new { id, categoryId, questionId });
+      return success == 1;
+    }
+
+    internal bool UnlinkCategory(string categoryId, string questionId)
+    {
+      var sql = @"DELETE FROM categoryquestions
+                  WHERE categoryid = @categoryId AND questionid = @questionId";
+      var success = _db.Execute(sql, new { categoryId, questionId });
       return success == 1;
     }
 
@@ -65,19 +73,25 @@ namespace StackUnderflow.Data
     }
 
 
+    public bool SelectCategory(string id)
+    {
+      var sql = @"
+          SELECT 
+          c.id  
+          FROM categories c
+          JOIN questionscategory qc ON q.id = qc.questionid
+          JOIN questions q ON qc.categoryid = c.id
+          WHERE c.id = @id";
+      var success = _db.Execute(sql, new { id });
+      return success == 1;
+
+    }
+
+
     public CategoriesRepository(IDbConnection db)
     {
       _db = db;
     }
 
   }
-
-  //REVIEW  this logic may be used later
-  //   var sql = @"
-  //         SELECT 
-  //         q.*  
-  //         FROM questions q
-  //         JOIN questionscategory qc ON q.id = qc.questionid
-  //         JOIN categories c ON qc.categoryid = c.id
-  //         WHERE q.id = @id";
 }

@@ -41,6 +41,13 @@ namespace StackUnderflow.Services
       return category;
     }
 
+
+    // bool linkedCategory = _repo.SelectCategory(categoryData.Id);
+    // if (linkedCategory == true)
+    // {
+    //   throw new Exception("You can't edit a category that has been added to a question.");
+    // }
+
     public Category DeleteCategory(string id)
     {
       var category = GetCategoryById(id);
@@ -50,7 +57,6 @@ namespace StackUnderflow.Services
         throw new Exception($"Unable to delete category ID: {id}");
       }
       return category;
-      //TODO add logic to be unable to delete once added to a question
     }
 
 

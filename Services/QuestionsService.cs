@@ -10,20 +10,11 @@ namespace StackUnderflow.Services
   {
     private readonly QuestionsRepository _repo;
     private readonly ResponsesRepository _rr;
+    private readonly CategoriesRepository _cr;
 
     public List<Question> GetAll()
     {
       return _repo.GetAllQuestions().ToList();
-    }
-
-    public Question Answered(Question questionData) //NOTE may not need this
-    {
-      if (questionData.QuestionAnswered == true)
-      {
-        throw new Exception("You can't edit an answered question");
-      }
-      return questionData;
-
     }
 
     public Question Create(Question questionData)
@@ -52,7 +43,6 @@ namespace StackUnderflow.Services
       {
         throw new Exception("You need an ID if you wish to edit a question");
       }
-      var check = Answered(question);
       question.Title = questionData.Title;
       question.Body = questionData.Body;
       question.LastModified = DateTime.Now;
@@ -85,15 +75,24 @@ namespace StackUnderflow.Services
       return _rr.GetResponsesForQuestion(question.Id).ToList();
     }
 
-    public bool AddCategoryToQuestion(Category categoryData) //NOTE not sure how to write this logic yet
+    public bool AddCategoryToQuestion(LinkorUnlinkCategory categoryData)
     {
+      if (categoryData.Action == "add")
+      {
+        _cr.LinkCategory(categoryData.CategoryId, categoryData.QuestionId);
+      }
+      if (categoryData.Action == "remove")
+      {
+        _cr.UnlinkCategory(categoryData.CategoryId, categoryData.QuestionId);
+      }
       return true;
     }
 
-    public QuestionsService(QuestionsRepository repo, ResponsesRepository rr)
+    public QuestionsService(QuestionsRepository repo, ResponsesRepository rr, CategoriesRepository cr)
     {
       _repo = repo;
       _rr = rr;
+      _cr = cr;
     }
 
   }

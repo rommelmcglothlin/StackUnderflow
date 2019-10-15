@@ -11,7 +11,6 @@ namespace StackUnderflow.Interfaces
     string Body { get; set; }
     string AuthorId { get; set; }
     string AnswerId { get; set; }
-    bool QuestionAnswered { get; set; }
     DateTime QuestionCreated { get; set; }
     DateTime LastModified { get; set; }
 

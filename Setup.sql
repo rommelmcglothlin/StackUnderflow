@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS categoryquestions
   categoryid VARCHAR(255) NOT NULL,
   questionid VARCHAR(255) NOT NULL,
 
-  FOREIGN KEY (questionsid)
+  FOREIGN KEY (questionid)
   REFERENCES questions(id),
   FOREIGN KEY (categoryid)
   REFERENCES categories(id),

@@ -28,6 +28,10 @@ namespace StackUnderflow.Services
     public Response EditResponse(Response responseData)
     {
       var response = GetResponseById(responseData.Id);
+      if (response.QuestionAnswered == true)
+      {
+        throw new Exception("can't edit a response once it has been marked as the answer.");
+      }
       response.Body = responseData.Body;
       response.Updated = DateTime.Now;
       bool success = _repo.UpdateResponse(response);
@@ -36,12 +40,6 @@ namespace StackUnderflow.Services
         throw new Exception("Unable to edit this response");
       }
       return response;
-    }
-
-    public Response GetResponseForQuestion(Response responseData)
-    {
-
-      return null;
     }
 
 

@@ -43,7 +43,7 @@ namespace StackUnderflow.Controllers
       }
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("{id}")] //NOTE  not sure if this is needed 
     public ActionResult<Category> Delete(string id)
     {
       try

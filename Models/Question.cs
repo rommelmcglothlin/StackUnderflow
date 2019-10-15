@@ -11,7 +11,6 @@ namespace StackUnderflow.Models
     public string Body { get; set; }
     public string AuthorId { get; set; }
     public string AnswerId { get; set; }
-    public bool QuestionAnswered { get; set; }
     public DateTime QuestionCreated { get; set; }
     public DateTime LastModified { get; set; }
     public List<Category> Tags { get; set; }
