@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 using System.Linq;
 using System.Threading.Tasks;
 using StackUnderflow.Models;
@@ -9,6 +10,7 @@ using StackUnderflow.Data;
 
 namespace StackUnderflow.Controllers
 {
+  [Authorize]
   [Route("api/[controller]")]
   [ApiController]
   public class QuestionsController : ControllerBase
@@ -45,6 +47,7 @@ namespace StackUnderflow.Controllers
       {
         questionData.Id = id;
         var question = _qs.EditQuestion(questionData);
+        questionData.AuthorId = HttpContext.User.FindFirst("Id").Value;
         return Ok(question);
       }
       catch (Exception e)
@@ -59,6 +62,7 @@ namespace StackUnderflow.Controllers
     {
       try
       {
+        questionData.AuthorId = HttpContext.User.FindFirst("Id").Value;
         Question myQuestion = _qs.Create(questionData);
         return Created("api/question/" + myQuestion.Id, myQuestion);
       }
@@ -90,6 +94,7 @@ namespace StackUnderflow.Controllers
       try
       {
         var question = _qs.DeleteQuestion(id);
+        question.AuthorId = HttpContext.User.FindFirst("Id").Value;
         return Ok(question);
       }
       catch (Exception e)

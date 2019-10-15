@@ -28,11 +28,11 @@ namespace StackUnderflow.Services
     public Category EditCategory(Category categoryData)
     {
       var category = GetCategoryById(categoryData.Id);
+      category.Name = categoryData.Name;
       if (category == null)
       {
         throw new Exception("You need an ID if you wish to edit the category name.");
       }
-      category.Name = categoryData.Name;
       bool success = _repo.UpdateCategory(category);
       if (!success)
       {
@@ -52,6 +52,8 @@ namespace StackUnderflow.Services
       return category;
       //TODO add logic to be unable to delete once added to a question
     }
+
+
 
 
     public CategoriesService(CategoriesRepository repo)

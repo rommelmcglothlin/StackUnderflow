@@ -14,19 +14,16 @@ CREATE TABLE IF NOT EXISTS questions
   title VARCHAR(255) NOT NULL, 
   body VARCHAR(255)NOT NULL,
   authorid VARCHAR(255) NOT NULL, 
-  answerid VARCHAR(255) NOT NULL,
-  answered TINYINT DEFAULT 0,
+  answerid VARCHAR(255),
   questioncreated DATETIME,
   questionupdated DATETIME,
 
   FOREIGN KEY (authorid)
   REFERENCES users(id),
-  FOREIGN KEY (answerid)
-  REFERENCES responses(id),
   PRIMARY KEY(id)
 );
 
-CRATE TABLE IF NOT EXISTS responses
+CREATE TABLE IF NOT EXISTS responses
 (
 
   id VARCHAR(255) NOT NULL,

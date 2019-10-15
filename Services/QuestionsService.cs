@@ -29,6 +29,7 @@ namespace StackUnderflow.Services
     public Question Create(Question questionData)
     {
       questionData.Id = Guid.NewGuid().ToString();
+      questionData.QuestionCreated = DateTime.Now;
       _repo.Create(questionData);
       return questionData;
     }

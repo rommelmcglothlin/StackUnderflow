@@ -12,9 +12,9 @@ namespace StackUnderflow.Data
     public Question Create(Question questionData)
     {
       var sql = @"INSERT INTO questions
-                (id, title, body, questioncreated)
+                (id, title, body, authorid, questioncreated)
                 VALUES
-                (@Id, @Title, @Body, @QuestionCreated);";
+                (@Id, @Title, @Body, @AuthorId, @QuestionCreated);";
       var x = _db.Execute(sql, questionData);
       return questionData;
     }
@@ -27,7 +27,7 @@ namespace StackUnderflow.Data
     public Question GetQuestionsById(string id)
     {
       var question = _db.QueryFirstOrDefault<Question>(
-          "SELECT * FROM question WHERE id = @id",
+          "SELECT * FROM questions WHERE id = @id",
           new { id });
       return question;
 
@@ -39,8 +39,7 @@ namespace StackUnderflow.Data
                 UPDATE questions SET
                 title = @Title,
                 body = @body,
-                answered = @QuestionAnswered,
-                lastmodified = @LastModified
+                questionupdated = @LastModified
                 WHERE id = @Id
                 ", question);
       return update == 1;
@@ -49,7 +48,7 @@ namespace StackUnderflow.Data
     internal bool DeleteQuestion(string id)
     {
       var success = _db.Execute(@"
-    DELETE FROM questions WHERE id = @id
+      DELETE FROM questions WHERE id = @id
       ", new { id });
       return success == 1;
     }

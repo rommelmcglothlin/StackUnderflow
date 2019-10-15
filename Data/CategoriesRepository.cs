@@ -30,7 +30,7 @@ namespace StackUnderflow.Data
     internal bool UpdateCategory(Category categoryData)
     {
       var update = _db.Execute(@"
-                    UPDATE responses SET
+                    UPDATE categories SET
                     name = @Name
                     WHERE id = @Id;"
                   , categoryData);

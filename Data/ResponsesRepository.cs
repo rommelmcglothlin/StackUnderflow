@@ -12,9 +12,9 @@ namespace StackUnderflow.Data
     public Response Create(Response responseData)
     {
       var sql = @"INSERT INTO responses
-                    (id, body)
+                    (id, body, questionid, authorid)
                     VALUES
-                    (@id, @body);";
+                    (@Id, @Body, @QuestionId, @AuthorId);";
       var x = _db.Execute(sql, responseData);
       return responseData;
     }
