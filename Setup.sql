@@ -64,3 +64,5 @@ CREATE TABLE IF NOT EXISTS categoryquestions
 -- DROP TABLE categoryquestions; 
 
 -- DROP TABLE categories;
+
+-- ALTER TABLE categories DROP UNIQUE name;

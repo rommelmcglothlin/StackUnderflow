@@ -34,14 +34,21 @@ namespace StackUnderflow.Data
           new { id });
     }
 
-    internal bool UpdateCategory(Category categoryData)
+    public LinkorUnlinkCategory GetCategoryQuestion(string id)
     {
-      var update = _db.Execute(@"
-                    UPDATE categories SET
-                    name = @Name
-                    WHERE id = @Id;"
-                  , categoryData);
-      return update == 1;
+      var sql = @"SELECT * FROM categoryquestions WHERE categoryid = @id;";
+
+      return _db.QueryFirstOrDefault<LinkorUnlinkCategory>(sql, new { id });
+    }
+
+
+    public bool UpdateCategory(Category categoryData)
+    {
+      var sql = @"UPDATE categories SET
+                name = @Name
+                WHERE id = @Id;";
+      var success = _db.Execute(sql, categoryData);
+      return success == 1;
     }
 
     public IEnumerable<Category> CategoryForQuestion(string id)
@@ -78,21 +85,13 @@ namespace StackUnderflow.Data
       new { id });
       return success == 1;
     }
-
-
-    public bool SelectCategory(string id)
+    internal bool CategoryQuestionDel(string id)
     {
-      var sql = @"
-          SELECT 
-          c.id  
-          FROM categories c
-          JOIN questionscategory qc ON q.id = qc.questionid
-          JOIN questions q ON qc.categoryid = c.id
-          WHERE c.id = @id";
-      var success = _db.Execute(sql, new { id });
+      var success = _db.Execute(@"
+      DELETE FROM categoryquestions WHERE categoryid = @Id",
+      new { id });
       return success == 1;
     }
-
 
     public CategoriesRepository(IDbConnection db)
     {

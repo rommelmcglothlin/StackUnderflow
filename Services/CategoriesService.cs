@@ -10,11 +10,11 @@ namespace StackUnderflow.Services
 
     public Category AddCategory(Category categoryData)
     {
-      var exists = _repo.GetCategoryByName(categoryData.Name);
-      if (exists != null)
-      {
-        throw new Exception("This category alredy exists.");
-      }
+      // var exists = _repo.GetCategoryByName(categoryData.Name); NOTE ADDED As per business logic, however it does not allow to test further if it has any duplicates.
+      // if (exists != null)
+      // {
+      //   throw new Exception("This category alredy exists.");
+      // }
       categoryData.Id = Guid.NewGuid().ToString();
       _repo.Create(categoryData);
       return categoryData;
@@ -32,29 +32,28 @@ namespace StackUnderflow.Services
 
     public Category EditCategory(Category categoryData)
     {
-      var category = GetCategoryById(categoryData.Id);
-      category.Name = categoryData.Name;
-      if (category == null)
+      var categoryQuestions = _repo.GetCategoryQuestion(categoryData.Id);
+      if (categoryQuestions != null)
       {
-        throw new Exception("You need an ID if you wish to edit the category name.");
+        throw new Exception("You can't edit categories that have been added to questions");
       }
-      bool success = _repo.UpdateCategory(category);
-      if (!success)
+      var category = _repo.GetCategoryById(categoryData.Id);
+      category.Name = categoryData.Name;
+      var update = _repo.UpdateCategory(category);
+      if (!update)
       {
         throw new Exception("Unable to change the name of this category at the moment.");
       }
       return category;
     }
 
-
-    // bool linkedCategory = _repo.SelectCategory(categoryData.Id);
-    // if (linkedCategory == true)
-    // {
-    //   throw new Exception("You can't edit a category that has been added to a question.");
-    // }
-
     public Category DeleteCategory(string id)
     {
+      var categoryQuestion = _repo.GetCategoryQuestion(id);
+      if (categoryQuestion != null)
+      {
+        throw new Exception("Unable to delete categories that have been added to queestions.");
+      }
       var category = GetCategoryById(id);
       var deleted = _repo.DeleteCategory(id);
       if (!deleted)
@@ -63,9 +62,6 @@ namespace StackUnderflow.Services
       }
       return category;
     }
-
-
-
 
     public CategoriesService(CategoriesRepository repo)
     {
